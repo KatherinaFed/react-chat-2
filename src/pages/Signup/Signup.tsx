@@ -9,7 +9,7 @@ function Signup() {
         <span className="signup_title">Sign Up</span>
         <form>
           <input type="text" placeholder="Display name" />
-          <input type="email" placeholder="Emal" />
+          <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
           <input style={{ display: 'none' }} type="file" id="file" />
           <label htmlFor="file">
