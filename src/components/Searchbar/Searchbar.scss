@@ -1,0 +1,39 @@
+.searchbar {
+  border-bottom: 1px solid #f4f3ee;
+
+  .searchbar_input {
+    padding: 10px;
+
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: #f4f3ee;
+
+      &::placeholder {
+        color: #293241;
+      }
+    }
+  }
+
+  .user_chat {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    color: #293241;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #3d5a80;
+      color: #f4f3ee;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
