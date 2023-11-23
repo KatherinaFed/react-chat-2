@@ -4,6 +4,8 @@ import './Chat.scss';
 import Camera from '../../assets/camera.png';
 import Add from '../../assets/addUser.png';
 import More from '../../assets/more.png';
+import Messages from '../Messages/Messages';
+import MessageInput from '../MessageInput/MessageInput';
 
 const Chat = () => {
   return (
@@ -16,6 +18,8 @@ const Chat = () => {
           <img src={More} alt="more_icon" />
         </div>
       </div>
+      <Messages />
+      <MessageInput />
     </div>
   );
 };
