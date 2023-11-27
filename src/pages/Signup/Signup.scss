@@ -7,6 +7,7 @@
 
   .signup_wrapper {
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 10px;
     background-color: #98c1d9;
@@ -32,7 +33,7 @@
       input {
         padding: 15px;
         border: none;
-        // width: 250px;
+        width: 250px;
         border-radius: 10px;
       }
 
