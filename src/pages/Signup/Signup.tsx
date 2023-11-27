@@ -3,7 +3,8 @@ import './Signup.scss';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import AddAvatar from '../../assets/addAvatar.png';
-import { auth, storage } from '../../firebase';
+import { auth, db, storage } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 function Signup() {
   const [error, setError] = useState<boolean>(false);
@@ -29,9 +30,14 @@ function Signup() {
 
       const storageRef = ref(storage, displayName);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = file
+        ? uploadBytesResumable(
+            storageRef,
+            new Blob([file], { type: file.type })
+          )
+        : null;
 
-      uploadTask.on(
+      uploadTask?.on(
         'state_changed',
         (error) => {
           setError(true);
@@ -40,6 +46,13 @@ function Signup() {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateProfile(response.user, {
               displayName,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, 'users', response.user.uid), {
+              uid: response.user.uid,
+              displayName,
+              email,
               photoURL: downloadURL,
             });
           });
