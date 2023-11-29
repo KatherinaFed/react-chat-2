@@ -16,12 +16,10 @@ function Signup() {
     const displayName: string = formData.get('displayName') as string;
     const email: string = formData.get('email') as string;
     const password: string = formData.get('password') as string;
-    const fileInput = e.currentTarget.elements.namedItem(
-      'file'
-    ) as HTMLInputElement;
-    const file = fileInput.files ? fileInput.files[0] : null;
+    const file = formData.get('file') as File;
 
     try {
+      // create a user
       const response = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -30,12 +28,7 @@ function Signup() {
 
       const storageRef = ref(storage, displayName);
 
-      const uploadTask = file
-        ? uploadBytesResumable(
-            storageRef,
-            new Blob([file], { type: file.type })
-          )
-        : null;
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask?.on(
         'state_changed',
