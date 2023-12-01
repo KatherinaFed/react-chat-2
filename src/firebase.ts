@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+  NextOrObserver,
+  User,
+  getAuth,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -17,3 +22,7 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const storage = getStorage();
 export const db = getFirestore(app);
+
+export const userStateListener = (callback: NextOrObserver<User>) => {
+  return onAuthStateChanged(auth, callback);
+};
