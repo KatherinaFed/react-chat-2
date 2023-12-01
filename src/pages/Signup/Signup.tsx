@@ -5,9 +5,12 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import AddAvatar from '../../assets/addAvatar.png';
 import { auth, db, storage } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [error, setError] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -20,37 +23,34 @@ function Signup() {
 
     try {
       // create a user
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
       const storageRef = ref(storage, displayName);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask?.on(
-        'state_changed',
-        (error) => {
-          setError(true);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(response.user, {
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL,
             });
-
-            await setDoc(doc(db, 'users', response.user.uid), {
-              uid: response.user.uid,
+            // create user on firestore
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
               displayName,
               email,
               photoURL: downloadURL,
             });
-          });
-        }
-      );
+
+            //create empty user chats on firestore
+            await setDoc(doc(db, 'chats', res.user.uid), {});
+            navigate('/');
+          } catch (err) {
+            console.log(err);
+            setError(true);
+          }
+        });
+      });
     } catch (err) {
       setError(true);
     }
@@ -76,7 +76,7 @@ function Signup() {
             <span>Add an avatar</span>
           </label>
           <button>Sign Up</button>
-          {error && <span>Something went wrong...</span>}
+          {error && <span className="error_msg">Something went wrong...</span>}
         </form>
         <p>You already have an account? Login</p>
       </div>
