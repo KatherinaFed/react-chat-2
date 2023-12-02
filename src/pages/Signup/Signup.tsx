@@ -5,7 +5,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import AddAvatar from '../../assets/addAvatar.png';
 import { auth, db, storage } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [error, setError] = useState<boolean>(false);
@@ -78,7 +78,9 @@ function Signup() {
           <button>Sign Up</button>
           {error && <span className="error_msg">Something went wrong...</span>}
         </form>
-        <p>You already have an account? Login</p>
+        <p>
+          You already have an account? <Link to={'/login'}>Login</Link>
+        </p>
       </div>
     </div>
   );
