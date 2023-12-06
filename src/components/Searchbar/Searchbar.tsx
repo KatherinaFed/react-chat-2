@@ -31,7 +31,6 @@ const Searchbar = () => {
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        console.log('doc: ', doc.data());
         setUser(doc.data());
       });
     } catch (error) {
@@ -44,15 +43,12 @@ const Searchbar = () => {
 
   const handleSelect = async () => {
     const combinedID =
-    currentUser?.uid > user?.uid
-    ? currentUser?.uid + user?.uid
-    : user?.uid + currentUser?.uid;
-    console.log('combinedID', combinedID);
+      currentUser?.uid > user?.uid
+        ? currentUser?.uid + user?.uid
+        : user?.uid + currentUser?.uid;
 
     try {
       const res = await getDoc(doc(db, 'chats', combinedID));
-
-      console.log('res:', res.exists())
 
       if (!res.exists()) {
         await setDoc(doc(db, 'chats', combinedID), { messages: [] });
@@ -76,6 +72,9 @@ const Searchbar = () => {
         });
       }
     } catch (error) {}
+
+    setUser(null);
+    setUsername('');
   };
 
   return (
@@ -86,6 +85,7 @@ const Searchbar = () => {
           placeholder="Find a user"
           onChange={(e) => setUsername(e.target.value)}
           onKeyDown={handleKey}
+          value={username}
         />
       </div>
       {err && <span>User not found!</span>}
