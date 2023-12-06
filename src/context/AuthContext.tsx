@@ -7,11 +7,11 @@ interface AuthProps {
 }
 
 export const AuthContext = createContext({
-  currentUser: {} as User | null,
+  currentUser: {} as User | null | undefined,
 });
 
 export const AuthProvider = ({ children }: AuthProps) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null | undefined>(null);
 
   useEffect(() => {
     const unsubscribe = userStateListener((user) => {
