@@ -1,7 +1,6 @@
-import React from 'react';
-import './Message.scss'
+import './Message.scss';
 
-const Message = () => {
+const Message = (msg: { message: string }) => {
   return (
     <div className="message owner">
       <div className="message_info">

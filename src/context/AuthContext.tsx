@@ -12,13 +12,13 @@ export const AuthContext = createContext({
 
 export const AuthProvider = ({ children }: AuthProps) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(null);
-
+  
   useEffect(() => {
     const unsubscribe = userStateListener((user) => {
       setCurrentUser(user);
     });
     return unsubscribe;
-  }, [setCurrentUser]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ currentUser }}>
