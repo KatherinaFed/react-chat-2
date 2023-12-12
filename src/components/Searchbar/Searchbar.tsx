@@ -43,7 +43,7 @@ const Searchbar = () => {
 
   const handleSelect = async () => {
     const combinedID =
-      currentUser?.uid > user?.uid
+    currentUser && currentUser?.uid > user?.uid
         ? currentUser?.uid + user?.uid
         : user?.uid + currentUser?.uid;
 

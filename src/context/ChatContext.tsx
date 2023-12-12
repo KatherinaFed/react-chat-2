@@ -7,9 +7,7 @@ interface AuthProps {
 
 interface ActionId {
   type: 'CHANGE_USER';
-  payload: {
-    uid: string;
-  };
+  payload: UserInfo;
 }
 
 export interface UserInfo {
@@ -19,7 +17,7 @@ export interface UserInfo {
 }
 
 const INITIAL_STATE = {
-  chatID: '',
+  chatID: 'null',
   user: {} as UserInfo,
 };
 
@@ -36,7 +34,7 @@ export const ChatProvider = ({ children }: AuthProps) => {
       case 'CHANGE_USER':
         return {
           user: action.payload,
-          chatId:
+          chatID:
             currentUser && currentUser?.uid > action.payload.uid
               ? currentUser?.uid + action.payload.uid
               : action.payload.uid + currentUser?.uid,
