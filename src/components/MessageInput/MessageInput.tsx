@@ -85,6 +85,7 @@ const MessageInput = () => {
         type="text"
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
+        value={text}
       />
       <div className="message_send">
         <img src={Attache} alt="" />
