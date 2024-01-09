@@ -12,7 +12,7 @@ interface ActionId {
 
 export interface UserInfo {
   displayName: string;
-  photoURL: string;
+  photoURL: string | null;
   uid: string;
 }
 

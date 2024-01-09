@@ -37,8 +37,6 @@ const Chats = () => {
     });
   };
 
-  console.log(chatsIntoArray)
-
   return (
     <div className="chats">
       {chatsIntoArray.sort((a, b) => b[1].date - a[1].date).map((chat) => (
@@ -49,7 +47,7 @@ const Chats = () => {
         >
           <img src={chat[1].userInfo.photoURL} alt="user avatar" />
           <div className="user_chat_info">
-            <span>{chat[1].lastMessage.displayName}</span>
+          <span>{chat[1].userInfo.displayName}</span>
             <p>{chat[1].lastMessage?.text}</p>
           </div>
         </div>

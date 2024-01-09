@@ -3,8 +3,16 @@ import './Messages.scss';
 
 import Message from '../Message/Message';
 import { ChatContext } from '../../context/ChatContext';
-import { DocumentData, doc, onSnapshot } from 'firebase/firestore';
+import { DocumentData, Timestamp, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
+
+export interface MessageI {
+  date: Timestamp;
+  id: string;
+  senderID: string;
+  text: string;
+  img?: string | null;
+}
 
 const Messages = () => {
   const [messages, setMessages] = useState<DocumentData | undefined>([]);
@@ -24,7 +32,7 @@ const Messages = () => {
 
   return (
     <div className="messages">
-      {messages?.map((msg: string) => (
+      {messages?.map((msg: MessageI) => (
         <Message message={msg} />
       ))}
     </div>
