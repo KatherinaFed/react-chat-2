@@ -3,6 +3,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import DefaultAvatar from '../../assets/defaultAvatar.png'
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const Navbar = () => {
     <div className="navbar">
       <span className="navbar_logo">Wonder Chat ✨</span>
       <div className="navbar_user">
-        <img src={currentUser?.photoURL as string} alt="user_avatar" />
+        <img src={currentUser?.photoURL as string || DefaultAvatar} alt="user avatar" />
         <span>{currentUser?.displayName as string}</span>
         <button onClick={() => signOut(auth)}>Logout</button>
       </div>

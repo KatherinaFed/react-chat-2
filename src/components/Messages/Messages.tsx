@@ -28,8 +28,6 @@ const Messages = () => {
     };
   }, [data.chatID]);
 
-  console.log('Messages: ', messages)
-
   return (
     <div className="messages">
       {messages?.map((msg: MessageI) => (

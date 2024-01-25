@@ -35,9 +35,9 @@ export const ChatProvider = ({ children }: AuthProps) => {
         return {
           user: action.payload,
           chatID:
-            currentUser && currentUser?.uid > action.payload.uid
-              ? currentUser?.uid + action.payload.uid
-              : action.payload.uid + currentUser?.uid,
+            currentUser && currentUser?.uid > action.payload?.uid
+              ? currentUser?.uid + action.payload?.uid
+              : action.payload?.uid + currentUser?.uid,
         };
 
       default:
